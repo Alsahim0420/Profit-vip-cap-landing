@@ -5,17 +5,18 @@
   # Comando de build (no necesario para sitio estático, pero se puede dejar vacío)
   command = ""
 
-# Configuración de contextos - Solo despliega desde la rama "release"
+# Configuración de contextos - Solo despliega ramas que empiecen con "release"
+# IMPORTANTE: En la UI de Netlify, configura:
+# - Site settings → Build & deploy → Continuous Deployment → Production branch: "release/3-nov" (o la rama release que uses)
+# - Site settings → Build & deploy → Continuous Deployment → Branch deploys: Habilítalo y filtra solo ramas que empiecen con "release*"
 [context.production]
   command = ""
   publish = "."
-  
-# Deshabilitar despliegues para otras ramas
+
+# Habilitar branch deploys solo para ramas que empiecen con "release"
 [context.branch-deploy]
-  disable = true
-  
-[context.deploy-preview]
-  disable = true
+  command = ""
+  publish = "."
 
 # Configuración de headers para mejor rendimiento y seguridad
 [[headers]]
