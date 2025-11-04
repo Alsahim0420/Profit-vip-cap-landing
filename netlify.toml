@@ -1,0 +1,56 @@
+[build]
+  # Directorio de publicación (donde están los archivos estáticos)
+  publish = "."
+  
+  # Comando de build (no necesario para sitio estático, pero se puede dejar vacío)
+  command = ""
+
+# Configuración de contextos - Solo despliega desde la rama "release"
+[context.production]
+  command = ""
+  publish = "."
+  
+# Deshabilitar despliegues para otras ramas
+[context.branch-deploy]
+  disable = true
+  
+[context.deploy-preview]
+  disable = true
+
+# Configuración de headers para mejor rendimiento y seguridad
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Headers específicos para imágenes (cache más largo)
+[[headers]]
+  for = "/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Headers para archivos HTML (sin cache para actualizaciones)
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+# Redirecciones (si es necesario)
+# Por ejemplo, redirigir todas las rutas a index.html para SPA
+# [[redirects]]
+#   from = "/*"
+#   to = "/index.html"
+#   status = 200
+
+# Configuración de funciones (si las necesitas en el futuro)
+[functions]
+  directory = "netlify/functions"
+
+# Configuración de plugins (si los necesitas)
+# [[plugins]]
+#   package = "@netlify/plugin-sitemap"
+
